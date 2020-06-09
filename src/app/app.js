@@ -1,15 +1,17 @@
 const express = require('express');
 const morgan = require('morgan');
 const mysql = require('mysql');
-
-const app = express();
-const mysqlConnection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'generic-schema',
+const knex = require('knex')({
+  client: 'mysql',
+  connection: {
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'generic-schema',
+  },
 });
 
+const app = express();
 app.use(morgan('short'));
 
 app.get('/', (req, res) => {
@@ -31,12 +33,21 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/user/:id', (req, res) => {
-  mysqlConnection.query(
-    `SELECT * FROM users WHERE id = ${req.params.id}`,
-    (err, rows, fields) => {
-      res.json(rows);
-    }
-  );
+  knex
+    .from('users')
+    .select('*')
+    .where('id', '=', req.params.id)
+    .then((rows) => {
+      console.log(rows);
+      res.json(rows)
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    })
+    .finally(() => {
+      knex.destroy();
+    });
 });
 
 app.listen(1600, () => {
