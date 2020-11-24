@@ -1,7 +1,7 @@
 # Generic-API
 A generic API made with Node.js
 
-# Why?
+# What is its purpose?
 This API is built so everytime you need a quick and simple Node.js API, you can just fork this and customize it.
 
 # What is it built with?
@@ -15,3 +15,5 @@ npm i
 npm start
 ```
 After that, create database and configure the **knex-config.js** file.
+
+Vinícius S. Chab - The Tailor Company
