@@ -17,4 +17,4 @@ npm start
 After that, create database and configure the **knex-config.js** file.
 The application will be running on `http://localhost:4100`.
 
-Vinícius S. Chab - The Tailor Company
+Vinícius S. Chab
